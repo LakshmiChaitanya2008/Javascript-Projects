@@ -1,0 +1,41 @@
+div {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 2px solid black;
+  padding: 30px;
+  background-color: white;
+}
+body {
+  background-color: #eee;
+}
+
+input,
+select {
+  display: block;
+  width: 200px;
+  margin-bottom: 20px;
+  height: 30px;
+  border: 1px solid black;
+}
+
+select {
+  margin-left: 2px;
+}
+
+h1 {
+  text-align: center;
+  padding-top: 50px;
+}
+
+span {
+  display: block;
+  text-align: center;
+  font-size: x-large;
+  margin-top: 10px;
+}
+
+button {
+  margin-left: 70px;
+}
