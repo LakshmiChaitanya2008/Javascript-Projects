@@ -13,7 +13,7 @@ const getCity = function (lat, lng) {
   fetch(`https://geocode.xyz/${lat},${lng}&auth=925964099323857631431x66490?geoit=json`)
     .then((res) => {
       if (!res.ok) {
-        throw new Error("Something Wen't Wrong! Refresh the page");
+        throw new Error("Something Wen't Wrong! Wait 2 or 3 seconds and refresh the page");
       }
       return res.json();
     })
