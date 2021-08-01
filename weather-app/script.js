@@ -33,7 +33,7 @@ const getLocation = function () {
 console.log(getLocation());
 
 const renderResults = function (data) {
-  labelCity.textContent = `${data.name}, ${data.sys.country === undefined ? "" : data.sys.country}`;
+  labelCity.textContent = `${data.name} ${data.sys.country === undefined ? "" : `,${data.sys.country}`}`;
   labelWeather.textContent = `${data.weather[0].main}`;
   labelTemp.textContent = `${Math.round(data.main.temp) - 273}°c`;
   labelMinMax.textContent = `${Math.round(data.main.temp_min) - 273}°c / ${Math.round(data.main.temp_max) - 273
