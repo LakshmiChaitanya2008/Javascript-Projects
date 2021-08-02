@@ -10,4 +10,8 @@ https://rpswithbot.netlify.app/
 Tip CALCULATOR:
 https://tipcalcer.netlify.app/
 
+Weather App:
+https://weather-app-with-js.netlify.app/
+
+
 new projects coming soon
