@@ -5,13 +5,15 @@ const labelTemp = document.querySelector(".temp");
 const labelWeather = document.querySelector(".weather");
 const labelMinMax = document.querySelector(".hi-low");
 
-const key = "f616cf0a4a999d2baa7ecfe8d8445bc2";
+const key = "d7681e7535a4b5a75b255b1ab312d798";
 const keyLocation = 'pk.de9b2c7acf1405437d83751bf89e297e	'
 
 const getCity = function (lat, lng) {
-  fetch(`https://eu1.locationiq.com/v1/reverse.php?key=${keyLocation}&lat=${lat}&lon=${lng}&format=json`)
+  fetch(`https://us1.locationiq.com/v1/reverse.php?key=${keyLocation}&lat=${lat}&lon=${lng}&zoom=10&format=json`)
   .then(res => res.json())
-  .then(res => getResults(res.address.city))
+  .then(res => {
+    getResults(res.address.city)
+  })
 };
 
 const getLocation = function () {
@@ -34,7 +36,7 @@ const renderResults = function (data) {
 const getResults = async function (city) {
   try {
     const res = await fetch(
-      `https://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=${key}`
+      `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${key}`
     );
 
     const data = await res.json();
