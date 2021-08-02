@@ -4,23 +4,14 @@ const labelCity = document.querySelector(".city");
 const labelTemp = document.querySelector(".temp");
 const labelWeather = document.querySelector(".weather");
 const labelMinMax = document.querySelector(".hi-low");
-// https://geocode.xyz/52.508,13.381?geoit=json.
 
 const key = "f616cf0a4a999d2baa7ecfe8d8445bc2";
-
+const keyLocation = 'pk.de9b2c7acf1405437d83751bf89e297e	'
 
 const getCity = function (lat, lng) {
-  fetch(`https://geocode.xyz/${lat},${lng}&auth=925964099323857631431x66490?geoit=json`)
-    .then((res) => {
-      if (!res.ok) {
-        throw new Error("Something Wen't Wrong! Wait 2 or 3 seconds and refresh the page");
-      }
-      return res.json();
-    })
-    .then((res) => {
-      getResults(res.city);
-    })
-    .catch((err) => alert(err));
+  fetch(`https://eu1.locationiq.com/v1/reverse.php?key=${keyLocation}&lat=${lat}&lon=${lng}&format=json`)
+  .then(res => res.json())
+  .then(res => getResults(res.address.city))
 };
 
 const getLocation = function () {
