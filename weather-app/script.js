@@ -6,8 +6,9 @@ const labelWeather = document.querySelector(".weather");
 const labelMinMax = document.querySelector(".hi-low");
 
 const key = "d7681e7535a4b5a75b255b1ab312d798";
-const keyLocation = 'pk.de9b2c7acf1405437d83751bf89e297e;'
+const keyLocation = 'pk.de9b2c7acf1405437d83751bf89e297e';
 
+// Getting City With lat,lng
 const getCity = function (lat, lng) {
   fetch(`https://us1.locationiq.com/v1/reverse.php?key=${keyLocation}&lat=${lat}&lon=${lng}&zoom=10&format=json`)
   .then(res => res.json())
@@ -16,6 +17,7 @@ const getCity = function (lat, lng) {
   })
 };
 
+// Getting User Location
 const getLocation = function () {
   navigator.geolocation.getCurrentPosition(function (pos) {
     const { latitude: lat, longitude: lng } = pos.coords;
@@ -23,8 +25,7 @@ const getLocation = function () {
   });
 };
 
-console.log(getLocation());
-
+// Rendering Results from getResults
 const renderResults = function (data) {
   labelCity.textContent = `${data.name} ${data.sys.country === undefined ? "" : `,${data.sys.country}`}`;
   labelWeather.textContent = `${data.weather[0].main}`;
@@ -33,6 +34,7 @@ const renderResults = function (data) {
     }°c`;
 };
 
+// Fetching Weather by city
 const getResults = async function (city) {
   try {
     const res = await fetch(
@@ -41,8 +43,8 @@ const getResults = async function (city) {
 
     const data = await res.json();
 
-    console.log(data);
     renderResults(data);
+    
   } catch (err) {
     alert("Can't Find Location")
   }
