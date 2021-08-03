@@ -25,6 +25,8 @@ const getLocation = function () {
   });
 };
 
+getLocation();
+
 // Rendering Results from getResults
 const renderResults = function (data) {
   labelCity.textContent = `${data.name} ${data.sys.country === undefined ? "" : `,${data.sys.country}`}`;
