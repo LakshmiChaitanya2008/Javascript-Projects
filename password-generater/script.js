@@ -47,7 +47,7 @@ const genratePassword = function () {
 };
 form.addEventListener("submit", function (e) {
   e.preventDefault();
-  if (inputLen.value === undefined) {
+  if (inputLen.value === "") {
     alert("Enter a appropriate value!");
   }
   if (genratePassword() === "") {
