@@ -2,10 +2,10 @@
 My Vannila Javascript Projects
 
 Random Password Generater:
-https://random-psw-generator.netlify.app/
+https://random-password-with-js.netlify.app
 
 Rock paper Scissors:
-https://rpswithbot.netlify.app/
+https://rps-with-js.netlify.app
 
 Weather App:
 https://weather-app-with-js.netlify.app/
