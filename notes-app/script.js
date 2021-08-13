@@ -1,23 +1,42 @@
 "use strict";
+
 const form = document.querySelector("form");
 const inputTitle = document.querySelector("input");
 const inputNote = document.querySelector("textarea");
 const notesContainer = document.querySelector(".notes");
 
-const notes =
-  localStorage.getItem("notes") === null
-    ? []
-    : JSON.parse(localStorage.getItem("notes"));
+class App {
+  // prettier-ignore
+  notes = localStorage.getItem("notes") === null ? [] : JSON.parse(localStorage.getItem("notes"));
 
-const updateLocalStorage = () => {
-  localStorage.setItem("notes", JSON.stringify(notes));
-};
+  constructor() {
+    this.updateUI();
+    form.addEventListener("submit", this.addNote.bind(this));
 
-const updateUI = function () {
-  notesContainer.innerHTML = "";
-  const html = notes
-    .map((note) => {
-      return `
+    notesContainer.onclick = function (e) {
+      if (e.target.parentElement.classList.contains("note")) {
+        const target = e.target;
+        const id = target.closest(".note").dataset.id;
+        const index = this.notes.findIndex((cur) => cur.id === +id);
+
+        if (e.target.classList.contains("remove"))
+          this.deleteNote.call(this, e);
+
+        if (e.target.classList.contains("edit"))
+          this.editNote.call(this, e, index);
+      }
+    }.bind(this);
+  }
+
+  updateLocalStorage() {
+    localStorage.setItem("notes", JSON.stringify(this.notes));
+  }
+
+  updateUI() {
+    notesContainer.innerHTML = "";
+    const html = this.notes
+      .map((note) => {
+        return `
         <div class="note" data-id="${note.id}">
           <h3 class="remove">❌</h3>
           <h3 class="edit">✏️</h3>
@@ -29,53 +48,38 @@ const updateUI = function () {
           </p>
         </div>
   `;
-    })
-    .join("");
+      })
+      .join("");
 
-  notesContainer.insertAdjacentHTML("beforeend", html);
-};
-
-updateUI();
-
-const addNote = function () {
-  if (!inputTitle.value) {
-    alert("Enter any Title");
-    return;
+    notesContainer.insertAdjacentHTML("beforeend", html);
   }
 
-  notes.push({
-    id: Date.now(),
-    title: inputTitle.value.trim(),
-    note: inputNote.value.trim(),
-  });
+  addNote(e) {
+    e.preventDefault();
 
-  updateLocalStorage();
-  updateUI();
+    if (!inputTitle.value) {
+      alert("Enter any Title");
+      return;
+    }
 
-  inputNote.value = inputTitle.value = "";
-};
+    this.notes.push({
+      id: Date.now(),
+      title: inputTitle.value.trim(),
+      note: inputNote.value.trim(),
+    });
 
-form.addEventListener("submit", function (e) {
-  e.preventDefault();
-  addNote();
-});
+    this.updateLocalStorage();
+    this.updateUI();
 
-notesContainer.addEventListener("click", function (e) {
-  const target = e.target;
-  const id = target.closest(".note").dataset.id;
-  const index = notes.findIndex((cur) => cur.id === +id);
-
-  if (target.classList.contains("remove")) {
-    notes.splice(index, 1);
-    updateLocalStorage();
-    updateUI();
+    inputNote.value = inputTitle.value = "";
   }
 
-  if (target.classList.contains("edit")) {
-    const inputUpdateTitle = target.parentElement.querySelector(".updateTitle");
-    const inputUpdateNote = target.parentElement.querySelector(".updateNote");
-    const noteTitle = target.parentElement.querySelector(".note-title");
-    const noteNote = target.parentElement.querySelector(".note-note");
+  editNote(e, index) {
+    const inputUpdateTitle =
+      e.target.parentElement.querySelector(".updateTitle");
+    const inputUpdateNote = e.target.parentElement.querySelector(".updateNote");
+    const noteTitle = e.target.parentElement.querySelector(".note-title");
+    const noteNote = e.target.parentElement.querySelector(".note-note");
 
     inputUpdateNote.style.display = "block";
     inputUpdateTitle.style.display = "block";
@@ -87,10 +91,23 @@ notesContainer.addEventListener("click", function (e) {
     inputUpdateNote.focus();
 
     inputUpdateNote.onblur = function () {
-      notes[index].title = inputUpdateTitle.value;
-      notes[index].note = inputUpdateNote.value;
-      updateUI();
-      updateLocalStorage();
-    };
+      console.log(this);
+      this.notes[index].title = inputUpdateTitle.value;
+      this.notes[index].note = inputUpdateNote.value;
+      this.updateUI();
+      this.updateLocalStorage();
+    }.bind(this);
   }
-});
+
+  deleteNote(e) {
+    const target = e.target;
+    const id = target.closest(".note").dataset.id;
+    const index = this.notes.findIndex((cur) => cur.id === +id);
+
+    this.notes.splice(index, 1);
+    this.updateLocalStorage();
+    this.updateUI();
+  }
+}
+
+const Notes = new App();
