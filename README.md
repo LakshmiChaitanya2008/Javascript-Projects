@@ -16,5 +16,8 @@ https://recipe-app-with-js.netlify.app/
 Notes App:
 https://notes-app-with-js.netlify.app/
 
+New Year Countdown:
+https://new-year-countdown-with-js.netlify.app/
+
 
 new projects coming soon
